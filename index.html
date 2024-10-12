@@ -119,13 +119,25 @@
     <button type="button" onclick="calculateResult()">Submit</button>
 </form>
 
-
-
 <script>
     function calculateResult() {
-        // Get all form inputs
         const form = document.forms['quizForm'];
         let directCount = 0, bigPictureCount = 0;
+        let unanswered = false;
+
+        // Check if all questions are answered
+        for (let i = 1; i <= 10; i++) {
+            if (!form[`q${i}`].value) {
+                unanswered = true;
+                break;
+            }
+        }
+
+        // If any question is unanswered, display a message
+        if (unanswered) {
+            document.getElementById('result').textContent = "Please answer all the questions before clicking 'Submit'.";
+            return;
+        }
 
         // Direct vs. Indirect questions
         if (form.q1.value === "A") directCount++;
